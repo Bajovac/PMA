@@ -27,6 +27,18 @@
             android:src="@drawable/bear"
             android:layout_width="100dp"
             android:layout_height="wrap_content"></ImageView>
+        <ImageView
+            android:id="@+id/bear2"
+            android:src="@drawable/bear2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"></ImageView>
+
+        <ImageView
+            android:id="@+id/chair"
+            android:src="@drawable/chair"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"></ImageView>
+
 
 
 

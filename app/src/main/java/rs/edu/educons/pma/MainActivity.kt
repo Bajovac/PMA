@@ -17,7 +17,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var arrayView: Array<View> //Ovde stoje arrayView zbog mogucnosti dodavanja vise modela kasnije
     lateinit var bearRenderable:ModelRenderable // Ovo omogucava pravljenje 3D modela, verteksa, i tekstura
-
+    lateinit var bear2Renderable:ModelRenderable
+    lateinit var chairRenderable:ModelRenderable
 
     internal var selected = 1 //Bira se medved posto je prvi
 
@@ -26,6 +27,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View?) { // Kada se klikne na medveda, dobije se providna pozadina
         if (view!!.id==R.id.bear){
             selected = 1
+            mySetBackground(view.id)
+        }else
+        if (view!!.id==R.id.bear2){
+            selected = 2
+            mySetBackground(view.id)
+        }else
+        if (view!!.id==R.id.chair){
+            selected = 3
             mySetBackground(view.id)
         }
     }
@@ -66,6 +75,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             bear.setParent(anchorNode)
             bear.renderable = bearRenderable
             bear.select()
+        }else
+        if(selected == 2) {
+            val bear2 = TransformableNode(arFragment.transformationSystem)
+            bear2.setParent(anchorNode)
+            bear2.renderable = bear2Renderable
+            bear2.select()
+        }else
+        if(selected == 3) {
+            val chair = TransformableNode(arFragment.transformationSystem)
+            chair.setParent(anchorNode)
+            chair.renderable = chairRenderable
+            chair.select()
         }
     }
 
@@ -78,7 +99,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(this@MainActivity,"Greska pri ucitavanju", Toast.LENGTH_SHORT).show()
                 null
             }
-
+        ModelRenderable.builder() // Sastavljanje modela zajedno sa teksturama
+            .setSource(this, R.raw.bear2)
+            .build()
+            .thenAccept{ modelRenderable -> bear2Renderable = modelRenderable }
+            .exceptionally {  throwable -> // Ukoliko dodje do greske, ispisuje se TOAST poruka
+                Toast.makeText(this@MainActivity,"Greska pri ucitavanju", Toast.LENGTH_SHORT).show()
+                null
+            }
+        ModelRenderable.builder() // Sastavljanje modela zajedno sa teksturama
+            .setSource(this, R.raw.chair)
+            .build()
+            .thenAccept{ modelRenderable -> chairRenderable = modelRenderable }
+            .exceptionally {  throwable -> // Ukoliko dodje do greske, ispisuje se TOAST poruka
+                Toast.makeText(this@MainActivity,"Greska pri ucitavanju", Toast.LENGTH_SHORT).show()
+                null
+            }
 
     }
 
@@ -91,7 +127,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setupArray() { // Punjenje liste
         arrayView=arrayOf(
-            bear
+            bear,
+            bear2,
+            chair
 
         )
     }
